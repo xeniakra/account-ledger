@@ -1,0 +1,58 @@
+EVENT REPLAY (strict input order; E10 arrives last despite booking Day 5)
+   E1 booked Day 1, value Day 1: POSTED — Ledger postings appended
+   E2 booked Day 1, value Day 1: POSTED — Ledger postings appended
+   E3 booked Day 2, value Day 2: APPROVED — Hold 200.00 reserved; available after hold: 50.00
+   E4 booked Day 3, value Day 3: POSTED — Ledger postings appended
+   E5 booked Day 4, value Day 4: POSTED — Settlement posted; hold released
+   E6 booked Day 4, value Day 4: REJECTED — Unknown or unapproved authorization Auth-Z
+   E7 booked Day 5, value Day 2: POSTED — Ledger postings appended
+  E7 checkpoint, Day 2 BEFORE fees: AED -370.00
+  E7 checkpoint, assessed fee value dates: Day 2, Day 4, Day 5
+   E8 booked Day 5, value Day 5: DECLINED — Insufficient available funds; after hold: -320.00
+   E9 booked Day 6, value Day 2: POSTED — Compensating posting added; original retained
+  E10 booked Day 5, value Day 5: POSTED — Ledger postings appended
+
+FINAL RESTATED DAY REPORT (after every event; fee adjustments retained)
+Balances include postings with value_day <= displayed day. Day 6 includes end-of-day capitalization.
+
+DAY 1
+  ACC-001 AED: closing 250.00; interest accrued 0.10; fees [none]
+  ACC-002 BHD: closing 0.000; interest accrued 0.000; fees [none]
+  authorizations: none
+  errors: none
+
+DAY 2
+  ACC-001 AED: closing 250.00; interest accrued 0.10; fees [OVERDRAFT_FEE -25.00, FEE_ADJUSTMENT +25.00]
+  ACC-002 BHD: closing 0.000; interest accrued 0.000; fees [none]
+  authorizations: Auth-A=APPROVED
+  errors: none
+
+DAY 3
+  ACC-001 AED: closing 650.00; interest accrued 0.26; fees [none]
+  ACC-002 BHD: closing 0.000; interest accrued 0.000; fees [none]
+  authorizations: Auth-A=APPROVED
+  errors: none
+
+DAY 4
+  ACC-001 AED: closing 465.00; interest accrued 0.19; fees [OVERDRAFT_FEE -25.00, FEE_ADJUSTMENT +25.00]
+  ACC-002 BHD: closing 0.000; interest accrued 0.000; fees [none]
+  authorizations: Auth-A=SETTLED
+  errors: E6: Unknown or unapproved authorization Auth-Z
+
+DAY 5
+  ACC-001 AED: closing 465.00; interest accrued 0.19; fees [OVERDRAFT_FEE -25.00, FEE_ADJUSTMENT +25.00]
+  ACC-002 BHD: closing 10.000; interest accrued 0.004; fees [none]
+  authorizations: Auth-A=SETTLED, Auth-B=DECLINED
+  errors: none
+
+DAY 6
+  ACC-001 AED: closing 466.03; interest accrued 0.19; fees [none]
+  ACC-002 BHD: closing 10.008; interest accrued 0.004; fees [none]
+  authorizations: Auth-A=SETTLED, Auth-B=DECLINED
+  errors: none
+
+DAY 6 CAPITALIZATION (sum of rounded daily accruals)
+  ACC-001 AED: daily (Decimal('0.10'), Decimal('0.10'), Decimal('0.26'), Decimal('0.19'), Decimal('0.19'), Decimal('0.19')), sum 1.03, posted 1.03
+  ACC-002 BHD: daily (Decimal('0.000'), Decimal('0.000'), Decimal('0.000'), Decimal('0.000'), Decimal('0.004'), Decimal('0.004')), sum 0.008, posted 0.008
+
+E10 BHD installments: ['3.333', '3.333', '3.334']

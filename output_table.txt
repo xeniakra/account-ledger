@@ -1,0 +1,13 @@
+Event   Action and result   A1 ledger       A1 hold         A1 available        A2 ledger
+Start   Open accounts	    0.00	        0.00	        0.00	            0.000
+E1-D1	Credit  +1,200	    1,200.00	    0.00	        1,200.00	        0.000
+E2-D1	Debit   −950	    250.00	        0.00	        250.00	            0.000
+E3-D2	Auth-A app,res 200	250.00	        200.00	        50.00	            0.000
+E4-D3	Credit +400	        650.00	        200.00	        450.00	            0.000
+E5-D4	Auth-A settled -185	465.00	        0.00	        465.00	            0.000
+E6-D4	Auth-Z rej	        465.00	        0.00	        465.00	            0.000
+E7-D5	debit −620 (-3) 	−230.00	        0.00	        −230.00	            0.000
+E8-D5	Auth-B declined;    −230.00	        0.00	        −230.00	            0.000
+E9-D6	Reverse E7      	465.00	        0.00	        465.00	            0.000
+E10-D5*	Three BHD credits	465.00	        0.00	        465.00	            10.000
+End D6	Capitalize interest	466.03	        0.00	        466.03	            10.008
